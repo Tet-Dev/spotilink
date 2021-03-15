@@ -145,7 +145,7 @@ export class SpotifyParser {
 			items.push(await (await fetch(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
 		}
 
-		if (convert) return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions)) as unknown as LavalinkTrack[]);
+		if (convert) return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions).catch(er=>{})) as unknown as LavalinkTrack[]);
 		return items.map(item => item.track);
 	}
 
