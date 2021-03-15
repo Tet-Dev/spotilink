@@ -64,7 +64,14 @@ class SpotifyParser {
             items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
         }
         if (convert)
-            return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions).catch(er => { })));
+            return Promise.all(items.map(async (item) =>{
+                let retres = null;
+                try{
+                    retres = await this.fetchTrack(item.track, fetchOptions);
+                }catch(er){
+                    
+                }
+            } ));
         return items.map(item => item.track);
     }
     /**
@@ -91,7 +98,6 @@ class SpotifyParser {
      * @returns {Promise<LavalinkTrack|null>} The promisified Lavalink Track object, or null if no match found.
      */
     async fetchTrack(track, fetchOptions = { prioritizeSameDuration: false, customFilter: () => true, customSort: () => 0 }) {
-        console.log(track);
         if (!track)
             throw new ReferenceError("The Spotify track object was not provided");
         if (!track.artists)
