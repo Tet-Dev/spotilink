@@ -70,6 +70,7 @@ class SpotifyParser {
                     return await this.fetchTrack(item.track, fetchOptions);
                 }catch(er){
                     console.trace(er);
+                    return null;
                 }
             } ));
         return items.map(item => item.track);
