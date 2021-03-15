@@ -64,7 +64,7 @@ class SpotifyParser {
             items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
         }
         if (convert)
-            return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions).catch(er => { })));
+            return Promise.all(items.map(async (item) => (await this.fetchTrack(item.track, fetchOptions)).catch(er => { })));
         return items.map(item => item.track);
     }
     /**
