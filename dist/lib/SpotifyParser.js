@@ -65,7 +65,6 @@ class SpotifyParser {
         }
         if (convert){
             let res = await Promise.all(items.map(async (item) =>{
-                let retres = null;
                 try{
                     return await this.fetchTrack(item.track, fetchOptions);
                 }catch(er){
@@ -73,7 +72,7 @@ class SpotifyParser {
                     return null;
                 }
             } ));
-            console.log(res.length);
+            console.log(res.length,items.length);
             return res;
         }
         return items.map(item => item.track);
