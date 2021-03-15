@@ -53,17 +53,17 @@ class SpotifyParser {
         if (typeof id !== "string")
             throw new TypeError(`The playlist ID must be a string, received type ${typeof id}`);
         const playlistInfo = await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}`, this.options)).json();
-        console.log(playlistInfo.tracks.items[0]);
+        // console.log(playlistInfo.tracks.items[0]);
         const sets = Math.ceil(playlistInfo.tracks.items.length / 100);
-        const items = [];
-        for (let set = 0; set < sets; set++) {
-            const params = new url_1.URLSearchParams();
-            params.set("limit", "100");
-            params.set("offset", String(set * 100));
-            // if (set === 0)
-            //     items.unshift();
-            items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
-        }
+        const items = playlistInfo.tracks.items;
+        // for (let set = 0; set < sets; set++) {
+        //     const params = new url_1.URLSearchParams();
+        //     params.set("limit", "100");
+        //     params.set("offset", String(set * 100));
+        //     // if (set === 0)
+        //     //     items.unshift();
+        //     items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
+        // }
         console.log(`total ${items.length}`);
         if (convert)
             return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions).catch(er => { })));
