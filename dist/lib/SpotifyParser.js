@@ -53,16 +53,18 @@ class SpotifyParser {
         if (typeof id !== "string")
             throw new TypeError(`The playlist ID must be a string, received type ${typeof id}`);
         const playlistInfo = await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}`, this.options)).json();
+        console.log(`Supposed total ${playlistInfo.track.total}`);
         const sets = Math.ceil(playlistInfo.tracks.total / 100);
-        const items = [{ track: { artists: [], name: "", duration_ms: 0 } }];
+        const items = [];
         for (let set = 0; set < sets; set++) {
             const params = new url_1.URLSearchParams();
             params.set("limit", "100");
             params.set("offset", String(set * 100));
-            if (set === 0)
-                items.unshift();
+            // if (set === 0)
+            //     items.unshift();
             items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
         }
+        console.log(`total ${items.length}`);
         if (convert)
             return Promise.all(items.map(async (item) => await this.fetchTrack(item.track, fetchOptions).catch(er => { })));
         return items.map(item => item.track);
