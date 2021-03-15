@@ -69,8 +69,9 @@ class SpotifyParser {
                 try{
                     retres = await this.fetchTrack(item.track, fetchOptions);
                 }catch(er){
-                    
+
                 }
+                return retres;
             } ));
         return items.map(item => item.track);
     }
