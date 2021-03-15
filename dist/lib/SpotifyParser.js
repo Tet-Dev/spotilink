@@ -63,8 +63,8 @@ class SpotifyParser {
                 items.unshift();
             items.push(await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}/tracks?${params}`, this.options)).json());
         }
-        if (convert)
-            return Promise.all(items.map(async (item) =>{
+        if (convert){
+            let res = await Promise.all(items.map(async (item) =>{
                 let retres = null;
                 try{
                     return await this.fetchTrack(item.track, fetchOptions);
@@ -73,6 +73,9 @@ class SpotifyParser {
                     return null;
                 }
             } ));
+            console.log(res.length);
+            return res;
+        }
         return items.map(item => item.track);
     }
     /**
