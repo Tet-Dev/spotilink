@@ -53,7 +53,7 @@ class SpotifyParser {
         if (typeof id !== "string")
             throw new TypeError(`The playlist ID must be a string, received type ${typeof id}`);
         const playlistInfo = await (await node_fetch_1.default(`${BASE_URL}/playlists/${id}`, this.options)).json();
-        console.log(`Supposed total ${playlistInfo}`);
+        console.log(playlistInfo);
         const sets = Math.ceil(playlistInfo.tracks.total / 100);
         const items = [];
         for (let set = 0; set < sets; set++) {
